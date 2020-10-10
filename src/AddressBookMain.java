@@ -140,6 +140,36 @@ public class AddressBookMain {
                 map(i->i.toString()).forEach(y-> System.out.println(y));
     }
 
+    public static void viewSortedContactsByCityInAddressBook(String AddressBookName) {
+        if(addressBookMap.get(AddressBookName) == null)
+        {
+            System.out.println("No addressBook with this name, enter correct address book");
+            return;
+        }
+        addressBookMap.get(AddressBookName).stream().sorted(Comparator.comparing(AddressBook :: getCity)).
+                map(i->i.toString()).forEach(y-> System.out.println(y));
+    }
+
+    public static void viewSortedContactsByStateInAddressBook(String AddressBookName) {
+        if(addressBookMap.get(AddressBookName) == null)
+        {
+            System.out.println("No addressBook with this name, enter correct address book");
+            return;
+        }
+        addressBookMap.get(AddressBookName).stream().sorted(Comparator.comparing(AddressBook :: getState)).
+                map(i->i.toString()).forEach(y-> System.out.println(y));
+    }
+
+    public static void viewSortedContactsByZipInAddressBook(String AddressBookName) {
+        if(addressBookMap.get(AddressBookName) == null)
+        {
+            System.out.println("No addressBook with this name, enter correct address book");
+            return;
+        }
+        addressBookMap.get(AddressBookName).stream().sorted(Comparator.comparing(AddressBookName :: getZip)).
+                map(i->i.toString()).forEach(y-> System.out.println(y));
+    }
+
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book");
         int choice = 1;
@@ -148,7 +178,9 @@ public class AddressBookMain {
             System.out.println("Enter 1 to Create Address Book \n2 edit in Address Book \n3. delete in Address Book\n"
                     +"4. Add in Address Book  \n5. display Address Book \n 6.Search By City \n 7.Search By State \n" +
                     " 8.View By City \n 9.View By State \n 10.View Alphabetically sorted contacts in a particular address book " +
-                    "\n 0 to exit");
+                    "\n 11.View Alphabetically sorted contacts in a particular address book by city \n" +
+                    "12.View Alphabetically sorted contacts in a particular address book by State " +
+                    "\n13.View Alphabetically sorted contacts in a particular address book by Zip \n0 to exit");
             choice = sc.nextInt();
             switch(choice) {
                 case 1 :
@@ -179,6 +211,15 @@ public class AddressBookMain {
                     break;
                 case 10:
                     viewSortedContactsInAddressBook();
+                    break;
+                case 11:
+                    viewSortedContactsByCityInAddressBook();
+                    break;
+                case 12:
+                    viewSortedContactsByStateInAddressBook();
+                    break;
+                case 13:
+                    viewSortedContactsByZipInAddressBook();
                     break;
                 default :
                     System.out.println("Invalid Input ");
