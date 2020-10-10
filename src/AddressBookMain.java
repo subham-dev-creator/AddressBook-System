@@ -128,6 +128,18 @@ public class AddressBookMain {
         }
     }
 
+    private static void viewSortedContactsInAddressBook() {
+        System.out.println("Enter the address book to view its sorted contacts");
+        String AddressBookName = sc.next();
+        if(addressBookMap.get(AddressBookName) == null)
+        {
+            System.out.println("No addressBook with this name, enter correct address book");
+            return;
+        }
+        addressBookMap.get(AddressBookName).stream().sorted((n1,n2) -> n1.firstName.compareTo(n2.firstName)).
+                map(i->i.toString()).forEach(y-> System.out.println(y));
+    }
+
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book");
         int choice = 1;
@@ -135,7 +147,8 @@ public class AddressBookMain {
         {
             System.out.println("Enter 1 to Create Address Book \n2 edit in Address Book \n3. delete in Address Book\n"
                     +"4. Add in Address Book  \n5. display Address Book \n 6.Search By City \n 7.Search By State \n" +
-                    " 8.View By City \n 9.View By State \n 0 to exit");
+                    " 8.View By City \n 9.View By State \n 10.View Alphabetically sorted contacts in a particular address book " +
+                    "\n 0 to exit");
             choice = sc.nextInt();
             switch(choice) {
                 case 1 :
@@ -163,6 +176,9 @@ public class AddressBookMain {
                     break;
                 case 9:
                     viewByState();
+                    break;
+                case 10:
+                    viewSortedContactsInAddressBook();
                     break;
                 default :
                     System.out.println("Invalid Input ");
