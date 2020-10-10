@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 public class ContactPerson extends AddressBook {
     // Functions
@@ -11,7 +12,12 @@ public class ContactPerson extends AddressBook {
     }
     static void CreateContact(int numOfPerson, ArrayList<AddressBook> addArray) {
         for(int i=0;i<numOfPerson;i++){
-            addArray.add(AddContact());
+            AddressBook add = AddContact();
+            int count = (int) addArray.stream().filter(j->j.equals(add)).count();
+            if(count>0)
+                System.out.println("Dupicate Contacts not allowed");
+            else
+                addArray.add(add);
         }
     }
     static void EditContact(ArrayList<AddressBook> addArray) {
