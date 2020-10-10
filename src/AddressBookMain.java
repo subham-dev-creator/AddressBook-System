@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookMain {
     private static HashMap<String, ArrayList<AddressBook>> addressBookMap = new HashMap<>();
@@ -93,10 +91,57 @@ public class AddressBookMain {
                     break;
                 case 5:
                     displayContact();
+                case 6:
+                    searchByCity();
+                    break;
+                case 7:
+                    searchByState();
+                    break;
                 default :
                     System.out.println("Invalid Input ");
                     break;
             }
+        }
+    }
+
+    private static void searchByCity() {
+        System.out.println("Enter the state to search contacts");
+        String city =sc.next();
+        if(addressBookMap.isEmpty())
+        {
+            System.out.println("No AddressBook Exists, add new AddressBook First");
+            System.exit(0);
+        }
+        for(Map.Entry<String, ArrayList<AddressBook>> ab : addressBookMap.entrySet()) {
+            List<AddressBook> c = ab.getValue().stream().filter(i->i.city.equals(i.city)).collect(Collectors.toList());
+            if(c.size() == 0)
+                System.out.println("No entry with city name in addressbook "+ab.getKey());
+
+            else
+                for(int j=0 ;j< c.size();j++) {
+                    System.out.println("AddressBook "+ab.getKey()+" Name "+c.get(j).firstName+" "+c.get(j).lastName);
+                }
+        }
+    }
+
+    private static void searchByState() {
+        System.out.println("Enter the city to search contacts");
+        String State = sc.next();
+        if(addressBookMap.isEmpty())
+        {
+            System.out.println("No AddressBook Exists, add new AddressBook First");
+            System.exit(0);
+        }
+        for(Map.Entry<String, ArrayList<AddressBook>> ab : addressBookMap.entrySet()) {
+
+            List<AddressBook> c = ab.getValue().stream().filter(i->i.state.equals(i.state)).collect(Collectors.toList());
+
+            if(c.size() == 0)
+                System.out.println("No entry with state name in addressbook "+ab.getKey());
+
+            else
+                for(int j=0 ;j< c.size();j++)
+                    System.out.println("AddressBook "+ab.getKey()+" Name "+c.get(j).firstName+" "+c.get(j).lastName);
         }
     }
 }
