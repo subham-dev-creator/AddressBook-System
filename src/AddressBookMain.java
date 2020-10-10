@@ -68,39 +68,22 @@ public class AddressBookMain {
         ContactPerson.displayContactPerson(list);
     }
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to Address Book");
-        int choice = 1;
-        while(choice!=0)
-        {
-            System.out.println("Enter 1 to Create Address Book \n2 edit in Address Book \n3. delete in Address Book\n"
-                    +"4. Add in Address Book  \n5. display Address Book \n0 to exit");
-            choice = sc.nextInt();
-            switch(choice) {
-                case 1 :
-                    addAddressBook();
-                    break;
-                case 2 :
-                    editContact();
-                    break;
-                case 3:
-                    deleteContact();
-                    break;
-                case 4:
-                    addContact();
-                    break;
-                case 5:
-                    displayContact();
-                case 6:
-                    searchByCity();
-                    break;
-                case 7:
-                    searchByState();
-                    break;
-                default :
-                    System.out.println("Invalid Input ");
-                    break;
-            }
+    private static void viewByState() {
+        System.out.println("Enter the state to view contacts");
+        String state = sc.next();
+        List<AddressBook> c = addressBookMap.get(state);
+        for(int j=0 ;j < c.size();j++) {
+            System.out.println(" Name "+c.get(j).firstName+" "+c.get(j).lastName);
+        }
+    }
+
+    private static void viewByCity() {
+        System.out.println("Enter the city to view contacts");
+        String city = sc.next();
+        List<AddressBook> c = addressBookMap.get(city);
+        for(int j=0 ;j < c.size();j++) {
+            System.out.println(c.get(j).city);
+            System.out.println(" Name "+c.get(j).firstName+" "+c.get(j).lastName);
         }
     }
 
@@ -142,6 +125,49 @@ public class AddressBookMain {
             else
                 for(int j=0 ;j< c.size();j++)
                     System.out.println("AddressBook "+ab.getKey()+" Name "+c.get(j).firstName+" "+c.get(j).lastName);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Welcome to Address Book");
+        int choice = 1;
+        while(choice!=0)
+        {
+            System.out.println("Enter 1 to Create Address Book \n2 edit in Address Book \n3. delete in Address Book\n"
+                    +"4. Add in Address Book  \n5. display Address Book \n 6.Search By City \n 7.Search By State \n" +
+                    " 8.View By City \n 9.View By State \n 0 to exit");
+            choice = sc.nextInt();
+            switch(choice) {
+                case 1 :
+                    addAddressBook();
+                    break;
+                case 2 :
+                    editContact();
+                    break;
+                case 3:
+                    deleteContact();
+                    break;
+                case 4:
+                    addContact();
+                    break;
+                case 5:
+                    displayContact();
+                case 6:
+                    searchByCity();
+                    break;
+                case 7:
+                    searchByState();
+                    break;
+                case 8:
+                    viewByCity();
+                    break;
+                case 9:
+                    viewByState();
+                    break;
+                default :
+                    System.out.println("Invalid Input ");
+                    break;
+            }
         }
     }
 }
