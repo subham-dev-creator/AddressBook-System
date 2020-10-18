@@ -1,9 +1,17 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBookMain {
     private static HashMap<String, ArrayList<AddressBook>> addressBookMap = new HashMap<>();
     private static final Scanner sc =new Scanner(System.in);
+
+
+    private static String path = "C:\\Users\\I524735\\IdeaProjects\\AddressBook-System";
+    private static String directory = "Address Book Directory";
 
     private static void deleteContact() {
         System.out.println(addressBookMap.keySet());
@@ -170,7 +178,42 @@ public class AddressBookMain {
                 map(i->i.toString()).forEach(y-> System.out.println(y));
     }
 
-    public static void main(String[] args) {
+    public static void writeToAFile() throws IOException {
+        Path directoryLoc = Paths.get(path + "\\addressbook\\" + directory);
+        if (Files.notExists(directoryLoc)) {
+            Files.createDirectory(directoryLoc);
+        }
+
+        Path fileLoc = Paths.get(directoryLoc + "\\Name" + ".txt");
+        if (Files.notExists(fileLoc))
+            Files.createFile(fileLoc);
+
+        StringBuffer bufferList = new StringBuffer();
+        addressBookMap.values().forEach(details -> {
+            String data = details.toString().concat("\n");
+            bufferList.append(data);
+        });
+        try {
+            Files.write(fileLoc, bufferList.toString().getBytes());
+            System.out.println("Contact added to the file successfully");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readFromAFile(){
+        Path directoryLoc1 = Paths.get(path + "\\addressbook\\" + directory);
+        Path fileLoc1 = Paths.get(directoryLoc1 + "\\Name" + ".txt");
+        try {
+            System.out.println("The contacts in the all the address books are");
+            Files.lines(fileLoc1).map(line -> line.trim()).forEach(line -> System.out.println(line));
+        }
+        catch(Exception e) {
+            e.getMessage();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
         System.out.println("Welcome to Address Book");
         int choice = 1;
         while(choice!=0)
@@ -180,7 +223,8 @@ public class AddressBookMain {
                     " 8.View By City \n 9.View By State \n 10.View Alphabetically sorted contacts in a particular address book " +
                     "\n 11.View Alphabetically sorted contacts in a particular address book by city \n" +
                     "12.View Alphabetically sorted contacts in a particular address book by State " +
-                    "\n13.View Alphabetically sorted contacts in a particular address book by Zip \n0 to exit");
+                    "\n13.View Alphabetically sorted contacts in a particular address book by Zip " +
+                    "\n14.Write To a File \n15.Read From a File \n0 to exit");
             choice = sc.nextInt();
             switch(choice) {
                 case 1 :
@@ -220,6 +264,12 @@ public class AddressBookMain {
                     break;
                 case 13:
                     viewSortedContactsByZipInAddressBook();
+                    break;
+                case 14:
+                    writeToAFile();
+                    break;
+                case 15:
+                    readFromAFile();;
                     break;
                 default :
                     System.out.println("Invalid Input ");
